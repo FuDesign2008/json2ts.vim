@@ -1,0 +1,22 @@
+{
+  "name": "json2ts.vim",
+  "version": "1.0.0",
+  "description": "json2ts.vim is a  vim plugin and converts a JSON from clipboard to TypeScript interfaces.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FuDesign2008/json2ts.vim.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FuDesign2008/json2ts.vim/issues"
+  },
+  "homepage": "https://github.com/FuDesign2008/json2ts.vim#readme",
+  "dependencies": {
+    "json2ts": "0.0.7"
+  }
+}

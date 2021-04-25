@@ -10,41 +10,30 @@ let g:json2ts = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! s:OpenUrl(url)
-    if strlen(a:url)
-        " open url from shell command line
-        " @see http://www.dwheeler.com/essays/open-files-urls.html
-        let urlStr = shellescape(a:url)
-        let cmdStr = ''
 
-        if has('win32') || has('win64')
-            let cmdStr = 'cmd /c start "" ' . urlStr
-        elseif has('mac')
-            let cmdStr = 'open -a Safari ' . urlStr
-            let findStr = system('ls /Applications/ | grep -i google\ chrome')
-            let findStrLocal = system('ls ~/Applications/ | grep -i google\ chrome')
-            if strlen(findStr) > 5 || strlen(findStrLocal) > 5
-                let cmdStr = 'open -a Google\ Chrome ' . urlStr
-            endif
-        elseif has('unix')
-            " unix/linux
-            let cmdStr = 'xdg-open ' . urlStr . ' &'
-        else
-            echomsg 'Url "' . urlStr . '" can NOT be opened!'
-            return
-        endif
+" @see https://stackoverflow.com/questions/4976776/how-to-get-path-to-the-current-vimscript-being-executed
+let s:selfPath = resolve(expand('<sfile>:p'))
+let s:bridgeJsPath = fnamemodify(s:selfPath, ':h') . '/bridge.js'
 
-        call system(cmdStr)
-        echomsg cmdStr
-
+" @return string[]
+function s:Json2tsFromClipboard()
+    let command = 'node ' . shellescape(s:bridgeJsPath)
+    let lines = systemlist(command)
+    let first = get(lines, 0, '')
+    if first !=# 'isValidJSON=true'
+        echomsg 'json2ts failed: The system clipboard has no valid json string!'
+        return
     endif
+    let jsonLines = slice(lines, 1)
+    call append(line('.'), jsonLines)
 endfunction
 
 
+command -nargs=0 Json2ts call s:Json2tsFromClipboard()
 
 
 if !exists('g:json2ts_custom_keymap')
-    nnoremap <leader>t :TryParseAndPaste<CR>
+    nnoremap <leader>t :Json2ts<CR>
 endif
 
 

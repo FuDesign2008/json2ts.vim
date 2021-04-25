@@ -9,7 +9,7 @@ json2ts.vim is a vim plugin and converts a JSON from clipboard to TypeScript int
    - Installation with Vim-Plug
      1. add content in `.vimrc`: `Plugin 'FuDesign2008/json2ts.vim', { 'do': 'npm install' }`
    - Installation with Vundle
-     1. add content in `.vimrc` `Plugin 'FuDesign2008/json2ts.vim'`
+     1. add content in `.vimrc`: `Plugin 'FuDesign2008/json2ts.vim'`
      1. `cd ~/.vim/bundle/json2ts.vim && npm install`
 
 ## Usage
